@@ -9,10 +9,18 @@ services:
             - "8989:80"
         volumes:
             - "./public/:/var/www/html"
-        #todo: add container name based on env variable {{APP-NAME}}-nginx
     fpm:
         build:
             context: .
             dockerfile: docker/fpm/Dockerfile
         volumes:
             - "./public/:/var/www/html"
+    db:
+        build:
+            context: .
+            dockerfile: docker/db/Dockerfile
+        volumes:
+            - "./docker/db/data:/var/lib/postgresql/data"
+        environment:
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_USER: postgres
