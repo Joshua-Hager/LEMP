@@ -9,12 +9,14 @@ services:
             - "8989:80"
         volumes:
             - "./public/:/var/www/html"
+        container_name: "${APP_NAME:-lemp}-nginx"
     fpm:
         build:
             context: .
             dockerfile: docker/fpm/Dockerfile
         volumes:
             - "./public/:/var/www/html"
+        container_name: "${APP_NAME:-lemp}-fpm"
     db:
         build:
             context: .
@@ -24,3 +26,4 @@ services:
         environment:
             POSTGRES_PASSWORD: postgres
             POSTGRES_USER: postgres
+        container_name: "${APP_NAME:-lemp}-db"
